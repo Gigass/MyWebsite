@@ -396,21 +396,30 @@ const CustomCursor = () => {
   );
 };
 
-// Reveal Wrapper for Scroll Animation
+// Reveal Wrapper for Scroll Animation（仅负责淡入出现）
 const RevealOnScroll = ({ children, delay = 0 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setIsVisible(true);
-    }, { threshold: 0.1 });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.1 }
+    );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div ref={ref} className={`transition-all duration-1000 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`} style={{ transitionDelay: `${delay}ms` }}>
+    <div
+      ref={ref}
+      className={`transition-all duration-1000 ease-out transform ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+      }`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
       {children}
     </div>
   );
@@ -469,7 +478,34 @@ const Navbar = ({ activeSection, scrollToSection }) => {
   );
 };
 
-const Hero = () => (
+const Hero = () => {
+  const [isHeroActiveMobile, setIsHeroActiveMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    if (!mq.matches) return;
+
+    const handleScroll = () => {
+      const el = document.querySelector('[data-hero-card-mobile="true"]');
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const center = rect.top + rect.height / 2;
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      const distance = Math.abs(center - viewportCenter);
+      const threshold = window.innerHeight * 0.2;
+
+      setIsHeroActiveMobile(isVisible && distance <= threshold);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
   <section id="home" className="min-h-screen flex flex-col justify-center pt-32 pb-28 md:pb-32 relative overflow-hidden bg-neo-black">
     {/* Big Background Text */}
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full select-none pointer-events-none overflow-hidden flex flex-col items-center justify-center opacity-10">
@@ -497,8 +533,8 @@ const Hero = () => (
         </div>
 
         {/* Mobile Profile Card: shown under CHRIS YANG on small screens */}
-        <div className="block lg:hidden mt-8 max-w-md mx-auto">
-          <div className="border-4 border-white bg-black p-2 shadow-neo-lg transform rotate-3">
+        <div className="block lg:hidden mt-8 max-w-md mx-auto" data-hero-card-mobile="true">
+          <div className={`border-4 border-white bg-black p-2 shadow-neo-lg transform transition-transform duration-500 ${isHeroActiveMobile ? 'rotate-0' : 'rotate-3'}`}>
             <div className="border-2 border-white p-6 bg-neo-black relative overflow-hidden">
               <div className="absolute top-0 right-0 bg-neo-pink text-black font-bold px-2 py-1 text-xs">V2.0</div>
               <div className="w-full aspect-square bg-[#111] border-2 border-white mb-4 flex items-center justify-center overflow-hidden relative">
@@ -565,84 +601,174 @@ const Hero = () => (
     </div>
   </section>
 );
+};
 
-const Advantages = () => (
-  <section className="py-32 relative z-10 bg-neo-black text-white">
-    <div className="container mx-auto px-6">
-      <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b-4 border-white pb-8">
-        <div>
-          <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter">Core <span className="text-transparent text-stroke-cyan">Modules</span></h2>
+const Advantages = () => {
+  const [activeAdvIndex, setActiveAdvIndex] = useState(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    if (!mq.matches) return;
+
+    const handleScroll = () => {
+      const cards = document.querySelectorAll('[data-adv-card="true"]');
+      const viewportCenter = window.innerHeight / 2;
+      let bestIndex = null;
+      let bestDistance = Infinity;
+
+      cards.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        if (!isVisible) return;
+
+        const indexAttr = el.getAttribute('data-adv-index');
+        const index = indexAttr ? parseInt(indexAttr, 10) : null;
+        if (index === null || Number.isNaN(index)) return;
+
+        const distance = Math.abs(center - viewportCenter);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestIndex = index;
+        }
+      });
+
+      setActiveAdvIndex(bestIndex);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <section className="py-32 relative z-10 bg-neo-black text-white">
+      <div className="container mx-auto px-6">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b-4 border-white pb-8">
+          <div>
+            <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter">
+              Core <span className="text-transparent text-stroke-cyan">Modules</span>
+            </h2>
+          </div>
+          <div className="font-mono text-black bg-neo-cyan px-2 py-1 border-2 border-black text-sm mt-4 md:mt-0 shadow-neo-sm">
+            [CAPABILITIES_MATRIX_V2.0]
+          </div>
         </div>
-        <div className="font-mono text-black bg-neo-cyan px-2 py-1 border-2 border-black text-sm mt-4 md:mt-0 shadow-neo-sm">
-          [CAPABILITIES_MATRIX_V2.0]
-        </div>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[minmax(200px,auto)]">
-        {data.home.advantages.map((adv, index) => {
-          const IconComponent = IconMap[adv.iconKey] || Code;
-          return (
-            <RevealOnScroll key={index} delay={index * 50}>
-              <div className={`group relative h-full bg-black border-4 border-white p-6 hover:shadow-neo-purple transition-all duration-300 flex flex-col justify-between ${adv.span}`}>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[minmax(200px,auto)]">
+          {data.home.advantages.map((adv, index) => {
+            const IconComponent = IconMap[adv.iconKey] || Code;
+            const isActive = activeAdvIndex === index;
 
-                <div className="flex justify-between items-start mb-4">
-                  <div className={`p-3 border-2 border-white bg-black group-hover:bg-white group-hover:text-black transition-colors ${adv.color}`}>
-                    <IconComponent size={32} strokeWidth={2} />
+            return (
+              <RevealOnScroll key={index} delay={index * 50}>
+                <div
+                  data-adv-card="true"
+                  data-adv-index={index}
+                  className={`group relative h-full bg-black border-4 border-white p-6 transition-all duration-300 flex flex-col justify-between ${adv.span} ${
+                    isActive ? 'shadow-neo-purple scale-[1.02]' : 'hover:shadow-neo-purple'
+                  }`}
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <div
+                      className={`p-3 border-2 border-white bg-black group-hover:bg-white group-hover:text-black transition-colors ${adv.color}`}
+                    >
+                      <IconComponent size={32} strokeWidth={2} />
+                    </div>
+                    <span className="font-mono text-xl font-black text-white/20 group-hover:text-white transition-colors">
+                      0{index + 1}
+                    </span>
                   </div>
-                  <span className="font-mono text-xl font-black text-white/20 group-hover:text-white transition-colors">0{index + 1}</span>
-                </div>
 
-                <div>
-                  <h3 className="text-2xl font-black text-white mb-2 uppercase leading-none">
-                    {adv.title}
-                  </h3>
-                  <p className="text-sm font-mono text-gray-400 mb-4 border-l-2 border-white pl-3">
-                    {adv.summary}
-                  </p>
-                </div>
+                  <div>
+                    <h3 className="text-2xl font-black text-white mb-2 uppercase leading-none">
+                      {adv.title}
+                    </h3>
+                    <p className="text-sm font-mono text-gray-400 mb-4 border-l-2 border-white pl-3">
+                      {adv.summary}
+                    </p>
+                  </div>
 
-                <ul className="space-y-1 border-t-2 border-white pt-3 mt-auto">
-                  {adv.details.map((detail, dIdx) => (
-                    <li key={dIdx} className="flex items-start text-xs font-bold text-white">
-                      <span className="mr-2 text-neo-purple">&gt;</span>
-                      {detail}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </RevealOnScroll>
-          )
-        })}
+                  <ul className="space-y-1 border-t-2 border-white pt-3 mt-auto">
+                    {adv.details.map((detail, dIdx) => (
+                      <li key={dIdx} className="flex items-start text-xs font-bold text-white">
+                        <span className="mr-2 text-neo-purple">&gt;</span>
+                        {detail}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </RevealOnScroll>
+            );
+          })}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 // --- Project Components ---
 
 // Compact Card Component
-const ProjectCard = ({ item, index, onClick }) => (
+const ProjectCard = ({ item, index, onClick, active = false, cardId }) => (
   <div
-    className="group relative bg-black border-4 border-white p-6 transition-all duration-300 hover:bg-neo-yellow hover:border-black hover:text-black cursor-pointer flex flex-col justify-between min-h-[280px] shadow-neo hover:shadow-neo-lg hover:-translate-y-2"
+    data-project-card="true"
+    data-card-id={cardId}
+    className={`group relative bg-black border-4 border-white p-6 transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[280px] shadow-neo ${
+      active
+        ? 'bg-neo-yellow border-black text-black shadow-neo-lg -translate-y-2'
+        : 'hover:bg-neo-yellow hover:border-black hover:text-black hover:shadow-neo-lg hover:-translate-y-2'
+    }`}
     onClick={onClick}
   >
     <div className="relative z-10">
       <div className="flex justify-between items-start mb-4">
-        <div className="p-2 border-2 border-white text-white group-hover:border-black group-hover:text-black transition-colors">
+        <div
+          className={`p-2 border-2 border-white text-white transition-colors ${
+            active ? 'border-black text-black' : 'group-hover:border-black group-hover:text-black'
+          }`}
+        >
           <Database size={24} />
         </div>
-        <span className="text-xs font-mono font-bold text-gray-500 group-hover:text-black">0{index + 1}</span>
+        <span
+          className={`text-xs font-mono font-bold text-gray-500 ${
+            active ? 'text-black' : 'group-hover:text-black'
+          }`}
+        >
+          0{index + 1}
+        </span>
       </div>
 
-      <h4 className="text-2xl font-black text-white mb-2 uppercase italic leading-none group-hover:text-black transition-colors line-clamp-2">
+      <h4
+        className={`text-2xl font-black mb-2 uppercase italic leading-none transition-colors line-clamp-2 ${
+          active ? 'text-black' : 'text-white group-hover:text-black'
+        }`}
+      >
         {item.title}
       </h4>
-      <div className="text-xs font-mono text-gray-400 mb-4 pb-3 border-b-2 border-white/20 group-hover:border-black/20 group-hover:text-black/70 flex justify-between">
+      <div
+        className={`text-xs font-mono mb-4 pb-3 border-b-2 flex justify-between ${
+          active
+            ? 'border-black/20 text-black/70'
+            : 'border-white/20 text-gray-400 group-hover:border-black/20 group-hover:text-black/70'
+        }`}
+      >
         <span>{item.meta.split('|')[0]}</span>
-        <span className="font-bold opacity-0 group-hover:opacity-100 transition-opacity">&gt; VIEW</span>
+        <span
+          className={`font-bold transition-opacity ${
+            active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+          }`}
+        >
+          &gt; VIEW
+        </span>
       </div>
 
-      <p className="text-sm text-gray-400 leading-relaxed line-clamp-3 mb-4 group-hover:text-black font-bold">
+      <p
+        className={`text-sm leading-relaxed line-clamp-3 mb-4 font-bold ${
+          active ? 'text-black' : 'text-gray-400 group-hover:text-black'
+        }`}
+      >
         {item.description[0]}
       </p>
     </div>
@@ -650,7 +776,14 @@ const ProjectCard = ({ item, index, onClick }) => (
     <div className="relative z-10 mt-auto">
       <div className="flex flex-wrap gap-1.5">
         {item.tags.slice(0, 3).map((tag, tIdx) => (
-          <span key={tIdx} className="text-[10px] font-black px-2 py-1 bg-white text-black border border-black uppercase tracking-wider group-hover:bg-black group-hover:text-white">
+          <span
+            key={tIdx}
+            className={`text-[10px] font-black px-2 py-1 border border-black uppercase tracking-wider ${
+              active
+                ? 'bg-black text-white'
+                : 'bg-white text-black group-hover:bg-black group-hover:text-white'
+            }`}
+          >
             {tag}
           </span>
         ))}
@@ -721,6 +854,42 @@ const ProjectModal = ({ project, onClose }) => {
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [activeProjectCardId, setActiveProjectCardId] = useState(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    if (!mq.matches) return;
+
+    const handleScroll = () => {
+      const cards = document.querySelectorAll('[data-project-card="true"]');
+      const viewportCenter = window.innerHeight / 2;
+      let bestId = null;
+      let bestDistance = Infinity;
+
+      cards.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        if (!isVisible) return;
+
+        const id = el.getAttribute('data-card-id');
+        if (!id) return;
+
+        const distance = Math.abs(center - viewportCenter);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestId = id;
+        }
+      });
+
+      setActiveProjectCardId(bestId);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <section id="project" className="py-32 relative z-10 overflow-hidden bg-neo-black">
@@ -740,15 +909,22 @@ const Projects = () => {
               </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {group.items.map((item, idx) => (
-                  <RevealOnScroll key={idx} delay={idx * 100}>
-                    <ProjectCard
-                      item={item}
-                      index={idx}
-                      onClick={() => setSelectedProject(item)}
-                    />
-                  </RevealOnScroll>
-                ))}
+                {group.items.map((item, idx) => {
+                  const cardId = `${groupIdx}-${idx}`;
+                  const isActive = activeProjectCardId === cardId;
+
+                  return (
+                    <RevealOnScroll key={idx} delay={idx * 100}>
+                      <ProjectCard
+                        item={item}
+                        index={idx}
+                        onClick={() => setSelectedProject(item)}
+                        active={isActive}
+                        cardId={cardId}
+                      />
+                    </RevealOnScroll>
+                  );
+                })}
               </div>
             </div>
           ))}
@@ -766,94 +942,169 @@ const Projects = () => {
   );
 };
 
-const OpenSource = () => (
-  <section id="opensource" className="py-32 relative z-10 bg-neo-black text-white">
-    <div className="container mx-auto px-6">
+const OpenSource = () => {
+  const [activeOpenSourceIndex, setActiveOpenSourceIndex] = useState(null);
 
-      {/* Header Section */}
-      <div className="text-center max-w-4xl mx-auto mb-20">
-        <div className="inline-flex items-center justify-center w-20 h-20 rounded-none border-4 border-white bg-neo-green mb-6 animate-spin-slow shadow-neo">
-          <Disc className="text-black w-10 h-10" />
-        </div>
-        <h2 className="text-6xl md:text-8xl font-black text-white mb-8 uppercase leading-none">
-          Open <span className="text-transparent text-stroke">Source</span>
-        </h2>
-        <p className="text-gray-300 font-mono text-lg font-bold">{data.opensource.intro.introduction}</p>
-      </div>
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    if (!mq.matches) return;
 
-      {/* Manifesto Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
-        {/* Principles */}
-        <div className="p-8 bg-black text-white border-4 border-white shadow-neo-purple relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-4 opacity-20"><Hash size={100} /></div>
-          <h3 className="text-3xl font-black text-neo-green mb-6 uppercase flex items-center"><Terminal className="mr-4" size={32} /> {data.opensource.intro.principles.title}</h3>
-          <ul className="space-y-4 relative z-10">
-            {data.opensource.intro.principles.points.map((point, idx) => (
-              <li key={idx} className="text-sm font-mono text-gray-300 leading-relaxed flex">
-                <span className="text-neo-green mr-2">&gt;</span>
-                {point}
-              </li>
-            ))}
-          </ul>
-        </div>
+    const handleScroll = () => {
+      const cards = document.querySelectorAll('[data-oss-card="true"]');
+      const viewportCenter = window.innerHeight / 2;
+      let bestIndex = null;
+      let bestDistance = Infinity;
 
-        <div className="space-y-8">
-          {/* Community */}
-          <div className="p-8 bg-black border-4 border-white shadow-neo">
-            <h3 className="text-2xl font-black text-white mb-4 uppercase">{data.opensource.intro.community.title}</h3>
-            <p className="text-base font-bold text-gray-300 leading-relaxed">{data.opensource.intro.community.content}</p>
+      cards.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        if (!isVisible) return;
+
+        const indexAttr = el.getAttribute('data-oss-index');
+        const index = indexAttr ? parseInt(indexAttr, 10) : null;
+        if (index === null || Number.isNaN(index)) return;
+
+        const distance = Math.abs(center - viewportCenter);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestIndex = index;
+        }
+      });
+
+      setActiveOpenSourceIndex(bestIndex);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <section id="opensource" className="py-32 relative z-10 bg-neo-black text-white">
+      <div className="container mx-auto px-6">
+
+        {/* Header Section */}
+        <div className="text-center max-w-4xl mx-auto mb-20">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-none border-4 border-white bg-neo-green mb-6 animate-spin-slow shadow-neo">
+            <Disc className="text-black w-10 h-10" />
           </div>
-          {/* Growth */}
-          <div className="p-8 bg-neo-yellow border-4 border-white shadow-neo">
-            <h3 className="text-2xl font-black text-black mb-4 uppercase">{data.opensource.intro.personal_growth.title}</h3>
-            <p className="text-base font-bold text-black leading-relaxed">{data.opensource.intro.personal_growth.content}</p>
+          <h2 className="text-6xl md:text-8xl font-black text-white mb-8 uppercase leading-none">
+            Open <span className="text-transparent text-stroke">Source</span>
+          </h2>
+          <p className="text-gray-300 font-mono text-lg font-bold">{data.opensource.intro.introduction}</p>
+        </div>
+
+        {/* Manifesto Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+          {/* Principles */}
+          <div className="p-8 bg-black text-white border-4 border-white shadow-neo-purple relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-20"><Hash size={100} /></div>
+            <h3 className="text-3xl font-black text-neo-green mb-6 uppercase flex items-center"><Terminal className="mr-4" size={32} /> {data.opensource.intro.principles.title}</h3>
+            <ul className="space-y-4 relative z-10">
+              {data.opensource.intro.principles.points.map((point, idx) => (
+                <li key={idx} className="text-sm font-mono text-gray-300 leading-relaxed flex">
+                  <span className="text-neo-green mr-2">&gt;</span>
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-8">
+            {/* Community */}
+            <div className="p-8 bg-black border-4 border-white shadow-neo">
+              <h3 className="text-2xl font-black text-white mb-4 uppercase">{data.opensource.intro.community.title}</h3>
+              <p className="text-base font-bold text-gray-300 leading-relaxed">{data.opensource.intro.community.content}</p>
+            </div>
+            {/* Growth */}
+            <div className="p-8 bg-neo-yellow border-4 border-white shadow-neo">
+              <h3 className="text-2xl font-black text-black mb-4 uppercase">{data.opensource.intro.personal_growth.title}</h3>
+              <p className="text-base font-bold text-black leading-relaxed">{data.opensource.intro.personal_growth.content}</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-        {data.opensource.projects.map((project, idx) => (
-          <RevealOnScroll key={idx} delay={idx * 100}>
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block p-8 bg-black border-4 border-white hover:bg-white hover:text-black transition-all duration-300 relative overflow-hidden hover:-translate-y-2 shadow-neo hover:shadow-neo-green"
-            >
-              <div className="absolute top-0 right-0 bg-white text-black text-xs font-bold px-2 py-1 group-hover:bg-neo-green group-hover:text-black transition-colors">
-                GIT_REPO
-              </div>
-              <div className="mb-6 text-white group-hover:text-neo-green transition-colors">
-                <Terminal size={40} />
-              </div>
-              <h3 className="text-2xl font-black mb-3 uppercase">{project.name}</h3>
-              <p className="text-sm font-bold text-gray-400 leading-relaxed mb-6 min-h-[60px] group-hover:text-gray-600 transition-colors">
-                {project.description}
-              </p>
-              <div className="flex items-center text-xs font-mono text-white/40 group-hover:text-neo-green transition-colors">
-                <span>&gt; ACCESS_CODE</span>
-                <span className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">_INIT</span>
-              </div>
-            </a>
-          </RevealOnScroll>
-        ))}
-      </div>
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {data.opensource.projects.map((project, idx) => {
+            const isActive = activeOpenSourceIndex === idx;
 
-      <div className="flex justify-center">
-        <a href={data.opensource.moreProjects.url} target="_blank" className="group relative inline-flex items-center px-12 py-5 bg-black text-white font-black uppercase tracking-widest border-4 border-white hover:bg-white hover:text-black hover:border-black hover:shadow-neo transition-all">
-          <span className="relative z-10 flex items-center text-xl">
-            <Github className="mr-3" size={24} />
-            {data.opensource.moreProjects.buttonText}
-          </span>
-        </a>
+            return (
+              <RevealOnScroll key={idx} delay={idx * 100}>
+                <a
+                  data-oss-card="true"
+                  data-oss-index={idx}
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group block p-8 border-4 transition-all duration-300 relative overflow-hidden shadow-neo ${
+                    isActive
+                      ? 'bg-white text-black -translate-y-2 shadow-neo-green'
+                      : 'bg-black text-white hover:bg-white hover:text-black hover:-translate-y-2 hover:shadow-neo-green'
+                  }`}
+                >
+                  <div
+                    className={`absolute top-0 right-0 text-xs font-bold px-2 py-1 transition-colors ${
+                      isActive
+                        ? 'bg-neo-green text-black'
+                        : 'bg-white text-black group-hover:bg-neo-green group-hover:text-black'
+                    }`}
+                  >
+                    GIT_REPO
+                  </div>
+                  <div
+                    className={`mb-6 transition-colors ${
+                      isActive ? 'text-neo-green' : 'text-white group-hover:text-neo-green'
+                    }`}
+                  >
+                    <Terminal size={40} />
+                  </div>
+                  <h3 className="text-2xl font-black mb-3 uppercase">{project.name}</h3>
+                  <p
+                    className={`text-sm font-bold leading-relaxed mb-6 min-h-[60px] transition-colors ${
+                      isActive ? 'text-gray-600' : 'text-gray-400 group-hover:text-gray-600'
+                    }`}
+                  >
+                    {project.description}
+                  </p>
+                  <div
+                    className={`flex items-center text-xs font-mono transition-colors ${
+                      isActive ? 'text-neo-green' : 'text-white/40 group-hover:text-neo-green'
+                    }`}
+                  >
+                    <span>&gt; ACCESS_CODE</span>
+                    <span
+                      className={`ml-auto transition-opacity ${
+                        isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                      }`}
+                    >
+                      _INIT
+                    </span>
+                  </div>
+                </a>
+              </RevealOnScroll>
+            );
+          })}
+        </div>
+
+        <div className="flex justify-center">
+          <a href={data.opensource.moreProjects.url} target="_blank" className="group relative inline-flex items-center px-12 py-5 bg-black text-white font-black uppercase tracking-widest border-4 border-white hover:bg-white hover:text-black hover:border-black hover:shadow-neo transition-all">
+            <span className="relative z-10 flex items-center text-xl">
+              <Github className="mr-3" size={24} />
+              {data.opensource.moreProjects.buttonText}
+            </span>
+          </a>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', message: '' });
+  const [isContactActiveMobile, setIsContactActiveMobile] = useState(false);
 
   const handleSend = () => {
     const subject = `MSG: ${formData.name}`;
@@ -868,6 +1119,30 @@ const Contact = () => {
       document.body.removeChild(link);
     } catch (e) { window.location.href = mailtoUrl; }
   };
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    if (!mq.matches) return;
+
+    const handleScroll = () => {
+      const el = document.querySelector('[data-contact-panel="true"]');
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const center = rect.top + rect.height / 2;
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      const distance = Math.abs(center - viewportCenter);
+      const threshold = window.innerHeight * 0.2;
+
+      setIsContactActiveMobile(isVisible && distance <= threshold);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <section id="contact" className="py-32 relative z-10 overflow-hidden bg-neo-black">
@@ -909,7 +1184,12 @@ const Contact = () => {
             </div>
           </div>
 
-          <div className="bg-white border-4 border-black p-8 md:p-12 relative shadow-neo-lg transform rotate-1 hover:rotate-0 transition-transform">
+          <div
+            data-contact-panel="true"
+            className={`bg-white border-4 border-black p-8 md:p-12 relative shadow-neo-lg transform transition-transform duration-500 hover:rotate-0 ${
+              isContactActiveMobile ? 'rotate-0' : 'rotate-1'
+            }`}
+          >
             <h3 className="text-4xl font-black text-black mb-8 uppercase flex items-center">
               <span className="w-4 h-4 bg-neo-green border-2 border-black rounded-full mr-4 animate-pulse"></span>
               Transmission
