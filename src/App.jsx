@@ -534,7 +534,7 @@ const Hero = () => {
 
         {/* Mobile Profile Card: shown under CHRIS YANG on small screens */}
         <div className="block lg:hidden mt-8 max-w-md mx-auto" data-hero-card-mobile="true">
-          <div className={`border-4 border-white bg-black p-2 shadow-neo-lg transform transition-transform duration-500 ${isHeroActiveMobile ? 'rotate-0' : 'rotate-3'}`}>
+          <div className={`border-4 border-white bg-black p-2 shadow-neo-lg transform transition-transform duration-500 ${isHeroActiveMobile ? 'rotate-0' : 'rotate-6'}`}>
             <div className="border-2 border-white p-6 bg-neo-black relative overflow-hidden">
               <div className="absolute top-0 right-0 bg-neo-pink text-black font-bold px-2 py-1 text-xs">V2.0</div>
               <div className="w-full aspect-square bg-[#111] border-2 border-white mb-4 flex items-center justify-center overflow-hidden relative">
@@ -572,7 +572,7 @@ const Hero = () => {
 
       {/* Right Visual (Profile Card) – desktop only */}
       <div className="lg:col-span-5 relative mt-10 lg:mt-0 max-w-md mx-auto lg:max-w-none order-1 lg:order-2 hidden lg:block">
-        <div className="border-4 border-white bg-black p-2 shadow-neo-lg transform rotate-3 hover:rotate-0 transition-transform duration-500">
+        <div className="border-4 border-white bg-black p-2 shadow-neo-lg transform rotate-6 hover:rotate-0 transition-transform duration-500">
           <div className="border-2 border-white p-6 bg-neo-black relative overflow-hidden">
             <div className="absolute top-0 right-0 bg-neo-pink text-black font-bold px-2 py-1 text-xs">V2.0</div>
             <div className="w-full aspect-square bg-[#111] border-2 border-white mb-4 flex items-center justify-center overflow-hidden relative">
@@ -1187,7 +1187,7 @@ const Contact = () => {
           <div
             data-contact-panel="true"
             className={`bg-white border-4 border-black p-8 md:p-12 relative shadow-neo-lg transform transition-transform duration-500 hover:rotate-0 ${
-              isContactActiveMobile ? 'rotate-0' : 'rotate-1'
+              isContactActiveMobile ? 'rotate-0' : 'rotate-6'
             }`}
           >
             <h3 className="text-4xl font-black text-black mb-8 uppercase flex items-center">
