@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Github, 
-  Mail, 
-  Phone, 
-  MessageCircle, 
-  ArrowUpRight, 
-  Terminal, 
-  Cpu, 
-  Layers, 
-  Code, 
-  Globe, 
+import {
+  Github,
+  Mail,
+  Phone,
+  MessageCircle,
+  ArrowUpRight,
+  Terminal,
+  Cpu,
+  Layers,
+  Code,
+  Globe,
   ExternalLink,
   Briefcase,
   Award,
@@ -29,8 +29,10 @@ import {
   ChevronDown,
   X,
   Maximize,
-  MousePointer2 
+  MousePointer2
 } from 'lucide-react';
+
+import profileImg from './assets/IMG_7605.jpg';
 
 // --- DATA SOURCE (No Changes) ---
 const data = {
@@ -51,92 +53,100 @@ const data = {
     "advantages": [
       {
         "iconKey": "Layers",
-        "title": "技术平台全周期主导与团队赋能",
-        "summary": "具备技术选型、架构设计到项目落地的全栈能力，擅长全流程管理与团队建设。",
+        "title": "技术平台全周期主导",
+        "summary": "具备技术选型、架构设计到项目落地的全栈能力。",
         "details": [
-          "主导核心平台从0到1的构建，实现架构落地与稳定迭代。",
-          "搭建技术团队，推动知识传承与高效协同。",
-          "为企业数字化转型提供持续技术支撑。"
+          "主导核心平台从0到1的构建。",
+          "搭建技术团队，推动知识传承。",
+          "数字化转型技术支撑。"
         ],
-        "color": "text-pink-500",
-        "borderColor": "group-hover:border-pink-500"
+        "color": "text-neo-pink",
+        "borderColor": "border-neo-pink",
+        "span": "md:col-span-2 md:row-span-2"
       },
       {
         "iconKey": "Factory",
-        "title": "制造业数字化转型深耕",
-        "summary": "拥有大型制造企业SaaS、CRM、LIMS等系统研发与落地主导经验。",
+        "title": "制造业数字化",
+        "summary": "大型制造企业SaaS、CRM、LIMS等系统研发。",
         "details": [
-          "精通业务流程重构、自动化与数据驱动平台架构设计。",
-          "为企业定制端到端创新解决方案，提升核心竞争力。"
+          "业务流程重构与自动化。",
+          "端到端创新解决方案。"
         ],
-        "color": "text-purple-500",
-        "borderColor": "group-hover:border-purple-500"
+        "color": "text-neo-purple",
+        "borderColor": "border-neo-purple",
+        "span": "md:col-span-1 md:row-span-1"
       },
       {
         "iconKey": "MessageSquare",
-        "title": "企业微信生态集成与开发",
-        "summary": "主导企业微信与OA、CRM系统高效集成，提升企业移动协作能力。",
+        "title": "企微生态集成",
+        "summary": "主导企业微信与OA、CRM系统高效集成。",
         "details": [
-          "全程负责企微生态系统集成与自动化流程开发。",
-          "打造高效业务场景下的移动化解决方案。"
+          "企微生态系统集成。",
+          "移动化解决方案。"
         ],
-        "color": "text-cyan-400",
-        "borderColor": "group-hover:border-cyan-400"
+        "color": "text-neo-cyan",
+        "borderColor": "border-neo-cyan",
+        "span": "md:col-span-1 md:row-span-1"
       },
       {
         "iconKey": "Server",
-        "title": "全栈视野与微服务架构落地",
-        "summary": "精通Java/Spring体系、Golang高并发，具备分布式系统设计能力。",
+        "title": "微服务架构落地",
+        "summary": "精通Java/Spring体系、Golang高并发。",
         "details": [
-          "熟练数据库、缓存、消息队列等底层技术。",
-          "主导高可用与高性能的企业级平台架构演进。"
+          "熟练数据库、缓存、MQ。",
+          "高可用架构演进。"
         ],
-        "color": "text-emerald-400",
-        "borderColor": "group-hover:border-emerald-400"
+        "color": "text-neo-green",
+        "borderColor": "border-neo-green",
+        "span": "md:col-span-2 md:row-span-1"
       },
       {
         "iconKey": "Cloud",
-        "title": "云原生与DevOps实战",
-        "summary": "主导平台容器化、Kubernetes运维与多租户SaaS部署。",
+        "title": "云原生与DevOps",
+        "summary": "主导平台容器化、K8s运维与多租户SaaS部署。",
         "details": [
-          "推动CI/CD流水线建设与自动化运维。",
-          "具备全球化与高可用架构部署的丰富实践。"
+          "CI/CD流水线建设。",
+          "全球化部署实践。"
         ],
         "color": "text-orange-500",
-        "borderColor": "group-hover:border-orange-500"
+        "borderColor": "border-orange-500",
+        "span": "md:col-span-1 md:row-span-2"
       },
       {
         "iconKey": "Smartphone",
-        "title": "全栈开发与多端系统交付",
-        "summary": "覆盖前端Vue、小程序至后端服务，实现端到端敏捷开发。",
+        "title": "全栈开发",
+        "summary": "覆盖前端Vue、小程序至后端服务。",
         "details": [
-          "擅长前后端分离与系统集成，多端协同交付。",
-          "优化用户体验与提升业务响应效率。"
+          "前后端分离与集成。",
+          "优化用户体验。"
         ],
         "color": "text-violet-500",
-        "borderColor": "group-hover:border-violet-500"
+        "borderColor": "border-violet-500",
+        "span": "md:col-span-1 md:row-span-1"
       },
       {
         "iconKey": "Bot",
-        "title": "AI工程化与智能平台研发",
-        "summary": "参与AI数据平台、智能机器人项目，推动AI与业务深度融合。",
+        "title": "AI工程化",
+        "summary": "参与AI数据平台、智能机器人项目。",
         "details": [
-          "将机器学习与自动化技术应用于实际业务流程。",
-          "实现数据驱动的智能决策与业务效率提升。"
+          "机器学习业务应用。",
+          "数据驱动智能决策。"
         ],
         "color": "text-blue-500",
-        "borderColor": "group-hover:border-blue-500"
+        "borderColor": "border-blue-500",
+        "span": "md:col-span-2 md:row-span-1"
       },
       {
         "iconKey": "Zap",
-        "title": "持续技术创新与系统化能力",
-        "summary": "保持技术热情与敏锐洞察，善于将创新转化为业务价值。",
+        "title": "持续创新",
+        "summary": "保持技术热情，将创新转化为业务价值。",
         "details": [
-          "系统分析与解决复杂问题，推动技术架构演进。",
-          "不断优化项目实践与组织技术能力。"
+          "解决复杂问题。",
+          "优化技术能力。"
         ],
-        "color": "text-yellow-400",
-        "borderColor": "group-hover:border-yellow-400"
+        "color": "text-neo-yellow",
+        "borderColor": "border-neo-yellow",
+        "span": "md:col-span-3 md:row-span-1"
       }
     ],
     "skillTags": [
@@ -369,19 +379,19 @@ const CustomCursor = () => {
 
   return (
     <>
-       {/* Main Crosshair */}
-       <div 
-         className="fixed pointer-events-none z-[9999] mix-blend-difference transition-transform duration-75 ease-out hidden md:block"
-         style={{ left: position.x, top: position.y, transform: `translate(-50%, -50%) scale(${isPointer ? 1.5 : 1})` }}
-       >
-          <div className="relative">
-            <div className="w-8 h-8 border border-cyan-400/80 rounded-full flex items-center justify-center">
-               <div className="w-1 h-1 bg-cyan-400 rounded-full"></div>
-            </div>
-            {/* Rotating ring */}
-            <div className="absolute inset-[-4px] border-t border-b border-cyan-400/30 rounded-full w-10 h-10 animate-spin-slow"></div>
+      {/* Main Crosshair */}
+      <div
+        className="fixed pointer-events-none z-[9999] mix-blend-difference transition-transform duration-75 ease-out hidden md:block"
+        style={{ left: position.x, top: position.y, transform: `translate(-50%, -50%) scale(${isPointer ? 1.5 : 1})` }}
+      >
+        <div className="relative">
+          <div className="w-8 h-8 border border-cyan-400/80 rounded-full flex items-center justify-center">
+            <div className="w-1 h-1 bg-cyan-400 rounded-full"></div>
           </div>
-       </div>
+          {/* Rotating ring */}
+          <div className="absolute inset-[-4px] border-t border-b border-cyan-400/30 rounded-full w-10 h-10 animate-spin-slow"></div>
+        </div>
+      </div>
     </>
   );
 };
@@ -427,54 +437,37 @@ const Marquee = ({ text, reverse = false }) => (
 );
 
 const Background = () => (
-  <div className="fixed inset-0 z-[-1] bg-[#030305]">
-    {/* Grid Overlay */}
-    <div className="absolute inset-0 bg-[linear-gradient(to_right,#232323_1px,transparent_1px),linear-gradient(to_bottom,#232323_1px,transparent_1px)] bg-[size:40px_40px] opacity-20"></div>
-    
-    {/* Intense Blobs */}
-    <div className="absolute top-[-10%] left-[-20%] w-[80vw] h-[80vw] rounded-full bg-purple-900/40 mix-blend-screen filter blur-[100px] animate-blob opacity-60" />
-    <div className="absolute bottom-[-20%] right-[-20%] w-[80vw] h-[80vw] rounded-full bg-blue-900/40 mix-blend-screen filter blur-[100px] animate-blob animation-delay-2000 opacity-60" />
-    <div className="absolute top-[40%] left-[30%] w-[50vw] h-[50vw] rounded-full bg-pink-900/30 mix-blend-screen filter blur-[120px] animate-blob animation-delay-4000 opacity-50" />
-    
-    {/* Scanlines */}
-    <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.5)_50%)] bg-[size:100%_4px] opacity-10 pointer-events-none"></div>
+  <div className="fixed inset-0 z-[-1] bg-neo-black">
+    {/* Dot Grid */}
+    <div className="absolute inset-0 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:20px_20px] opacity-30"></div>
 
-    {/* Vignette */}
-    <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/80"></div>
+    {/* Random Glitch Lines */}
+    <div className="absolute top-1/4 left-0 w-full h-[2px] bg-neo-cyan opacity-20 animate-pulse"></div>
+    <div className="absolute bottom-1/3 left-0 w-full h-[1px] bg-neo-purple opacity-20 animate-pulse animation-delay-2000"></div>
   </div>
 );
 
 const Navbar = ({ activeSection, scrollToSection }) => {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
-      scrolled ? 'bg-black/80 backdrop-blur-lg border-white/10 py-4' : 'bg-transparent border-transparent py-6'
-    }`}>
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b-4 border-white bg-neo-black py-4">
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <div 
-          className="text-3xl font-black tracking-tighter italic cursor-pointer group relative"
+        <div
+          className="text-4xl font-black italic cursor-pointer group relative"
           onClick={() => scrollToSection('home')}
         >
-          <span className="text-white relative z-10 mix-blend-difference animate-glitch" data-text="CY.STUDIO">CY.STUDIO</span>
-          <div className="absolute -bottom-1 left-0 w-full h-2 bg-cyan-400 -skew-x-12 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+          <span className="text-white relative z-10 group-hover:text-neo-cyan transition-colors">CY.STUDIO</span>
+          <div className="absolute top-1 left-1 w-full h-full bg-neo-purple -z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
         </div>
-        
-        <div className="hidden md:flex items-center space-x-1">
+
+        <div className="hidden md:flex items-center space-x-4">
           {data.layout.navigation.map((item) => (
             <button
               key={item.name}
               onClick={() => scrollToSection(item.to)}
-              className={`px-6 py-2 text-sm font-bold tracking-wider uppercase transition-all skew-x-[-10deg] border border-transparent hover:border-cyan-400/50 hover:text-cyan-400 ${
-                activeSection === item.to ? 'text-cyan-400 bg-white/5 border-cyan-400/30' : 'text-gray-400'
-              }`}
+              className={`px-6 py-2 text-sm font-bold tracking-wider uppercase border-2 border-transparent hover:border-white hover:bg-neo-cyan hover:text-black hover:shadow-neo transition-all ${activeSection === item.to ? 'bg-white text-black border-white shadow-neo' : 'text-gray-400'
+                }`}
             >
-              <span className="block skew-x-[10deg]">{item.name}</span>
+              {item.name}
             </button>
           ))}
         </div>
@@ -484,151 +477,121 @@ const Navbar = ({ activeSection, scrollToSection }) => {
 };
 
 const Hero = () => (
-  <section id="home" className="min-h-screen flex flex-col justify-center pt-20 relative overflow-hidden">
-    {/* Background Big Text with Parallax-ish effect */}
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full select-none pointer-events-none overflow-hidden flex flex-col items-center justify-center opacity-[0.03]">
-      <h1 className="text-[20vw] font-black leading-none text-white whitespace-nowrap animate-pulse-slow">ENGINEER</h1>
-      <h1 className="text-[20vw] font-black leading-none text-white whitespace-nowrap ml-[20vw]">ARCHITECT</h1>
+  <section id="home" className="min-h-screen flex flex-col justify-center pt-32 relative overflow-hidden bg-neo-black">
+    {/* Big Background Text */}
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full select-none pointer-events-none overflow-hidden flex flex-col items-center justify-center opacity-10">
+      <h1 className="text-[15vw] font-black leading-none text-transparent text-stroke">ENGINEER</h1>
+      <h1 className="text-[15vw] font-black leading-none text-transparent text-stroke ml-[20vw]">ARCHITECT</h1>
     </div>
 
     <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
       {/* Left Content */}
       <div className="lg:col-span-7 space-y-8">
         {/* Status Bar */}
-        <div className="flex items-center space-x-4 font-mono text-xs text-cyan-400">
-          <div className="flex items-center px-2 py-1 border border-cyan-500/30 bg-cyan-500/10 rounded-sm">
-            <span className="w-2 h-2 bg-cyan-400 rounded-full animate-ping mr-2"></span>
-            SYSTEM ONLINE
-          </div>
-          <div className="hidden sm:block text-gray-500">/// LOC: SUZHOU, CN</div>
-          <div className="hidden sm:block text-gray-500">/// ID: CY-8080</div>
+        <div className="inline-flex items-center space-x-4 font-mono text-xs text-black bg-neo-cyan px-4 py-2 border-2 border-white shadow-neo transform -rotate-1">
+          <span className="w-3 h-3 bg-black rounded-full animate-ping"></span>
+          <span className="font-bold">SYSTEM ONLINE</span>
+          <span className="hidden sm:block">/// LOC: SUZHOU, CN</span>
         </div>
 
-        <div className="relative group">
-          <h1 
-             className="text-6xl md:text-8xl font-black text-white leading-[1.1] tracking-tighter mix-blend-overlay animate-glitch"
-             data-text="CHRIS YANG"
-          >
-            CHRIS<br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-purple-400 animate-gradient-x">YANG</span>
+        <div className="relative">
+          <h1 className="text-7xl md:text-9xl font-black text-white leading-[0.9] tracking-tighter">
+            CHRIS<br />
+            <span className="text-neo-purple text-stroke-sm">YANG</span>
           </h1>
-          {/* Glitch Decoration */}
-          <div className="absolute -top-4 -left-4 w-12 h-12 border-t-4 border-l-4 border-cyan-400 opacity-50"></div>
-          <div className="absolute -bottom-4 -right-4 w-12 h-12 border-b-4 border-r-4 border-purple-400 opacity-50"></div>
-        </div>
-        
-        <div className="text-gray-300 text-lg md:text-xl max-w-2xl leading-relaxed border-l-2 border-white/20 pl-6">
-            <p className="font-bold text-white mb-2">{data.home.hero.subtitle}</p>
-            <p className="text-sm md:text-base text-gray-400">{data.home.hero.description}</p>
+          {/* Deco */}
+          <div className="absolute -top-6 -left-6 w-16 h-16 border-t-4 border-l-4 border-neo-green"></div>
         </div>
 
-        <div className="flex flex-wrap gap-2 pt-4">
+        <div className="bg-white border-2 border-black p-6 shadow-neo transform rotate-1 max-w-2xl">
+          <p className="font-bold text-black text-xl mb-2 uppercase">{data.home.hero.subtitle}</p>
+          <p className="text-sm md:text-base text-black font-mono leading-relaxed">{data.home.hero.description}</p>
+        </div>
+
+        <div className="flex flex-wrap gap-3 pt-4">
           {data.home.skillTags.slice(0, 8).map((tag, idx) => (
-            <span key={idx} className="px-3 py-1 bg-[#111] border border-gray-800 text-gray-400 text-[10px] font-bold font-mono hover:bg-cyan-400 hover:text-black hover:border-cyan-400 transition-all cursor-default uppercase hover:-translate-y-1">
+            <span key={idx} className="px-4 py-2 bg-black border-2 border-white text-white text-xs font-bold font-mono hover:bg-neo-yellow hover:text-black hover:border-black hover:shadow-neo transition-all cursor-default uppercase">
               {tag}
             </span>
           ))}
-          <span className="px-3 py-1 text-gray-600 text-[10px] font-bold font-mono flex items-center">
-             + MORE
-          </span>
         </div>
       </div>
 
-      {/* Right Visual (Holographic HUD) */}
-      <div className="lg:col-span-5 relative h-[500px] hidden lg:block">
-        <div className="absolute inset-0 border border-white/10 bg-white/[0.02] backdrop-blur-sm rounded-lg p-6 transform rotate-3 hover:rotate-0 transition-transform duration-500 group">
-            {/* HUD Corners */}
-            <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-500"></div>
-            <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-500"></div>
-            <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-500"></div>
-            <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-500"></div>
-
-            <div className="h-full w-full bg-black/40 grid grid-rows-6 gap-2 p-4 font-mono text-xs text-cyan-400/80">
-                <div className="row-span-2 border border-cyan-500/20 p-2 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-[1px] bg-cyan-400/50 animate-scan"></div>
-                    <p className="text-white font-bold mb-2">TARGET_PROFILE</p>
-                    <div className="flex justify-between">
-                        <span>ROLE:</span><span>FULLSTACK_DEV</span>
-                    </div>
-                    <div className="flex justify-between">
-                        <span>EXP:</span><span>SENIOR_LEVEL</span>
-                    </div>
-                </div>
-                <div className="row-span-3 border border-cyan-500/20 p-2 flex items-end relative group-hover:bg-cyan-500/10 transition-colors">
-                     <div className="w-1/4 h-[40%] bg-purple-500/50 mx-1 animate-pulse"></div>
-                     <div className="w-1/4 h-[70%] bg-cyan-500/50 mx-1 animate-pulse animation-delay-2000"></div>
-                     <div className="w-1/4 h-[50%] bg-pink-500/50 mx-1 animate-pulse animation-delay-4000"></div>
-                     <div className="w-1/4 h-[90%] bg-white/50 mx-1"></div>
-                     <div className="absolute top-2 right-2 text-[10px]">STATS.LOG</div>
-                </div>
-                <div className="row-span-1 bg-cyan-500/20 flex items-center justify-center animate-pulse">
-                    &gt;&gt;&gt; INITIALIZING CONNECTION &lt;&lt;&lt;
-                </div>
+      {/* Right Visual (Profile Card) */}
+      <div className="lg:col-span-5 relative hidden lg:block">
+        <div className="border-4 border-white bg-black p-2 shadow-neo-lg transform rotate-3 hover:rotate-0 transition-transform duration-500">
+          <div className="border-2 border-white p-6 bg-neo-black relative overflow-hidden">
+            <div className="absolute top-0 right-0 bg-neo-pink text-black font-bold px-2 py-1 text-xs">V2.0</div>
+            <div className="w-full aspect-square bg-[#111] border-2 border-white mb-4 flex items-center justify-center overflow-hidden relative">
+              {/* Placeholder for Avatar or Graphic */}
+              <div className="absolute inset-0 bg-cover bg-center transition-all duration-500" style={{ backgroundImage: `url(${profileImg})` }}></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
             </div>
+            <div className="font-mono text-neo-green text-sm space-y-2">
+              <div className="flex justify-between border-b border-white/20 pb-1">
+                <span>ROLE:</span><span>FULLSTACK_DEV</span>
+              </div>
+              <div className="flex justify-between border-b border-white/20 pb-1">
+                <span>EXP:</span><span>SENIOR_LEVEL</span>
+              </div>
+              <div className="flex justify-between">
+                <span>STATUS:</span><span className="animate-pulse">AVAILABLE</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div className="absolute bottom-0 w-full z-20">
-       <Marquee text="JAVA • KUBERNETES • REACT • AI AGENTS • CLOUD NATIVE •" />
+    <div className="absolute bottom-0 w-full z-20 border-t-4 border-white bg-neo-yellow text-black">
+      <Marquee text="JAVA • KUBERNETES • REACT • AI AGENTS • CLOUD NATIVE •" />
     </div>
   </section>
 );
 
 const Advantages = () => (
-  <section className="py-32 relative z-10 bg-[#030305]">
+  <section className="py-32 relative z-10 bg-neo-black text-white">
     <div className="container mx-auto px-6">
-      <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-white/10 pb-8">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b-4 border-white pb-8">
         <div>
-            <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">Core <span className="text-stroke text-transparent stroke-white">Modules</span></h2>
+          <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter">Core <span className="text-transparent text-stroke-cyan">Modules</span></h2>
         </div>
-        <div className="font-mono text-cyan-400 text-sm mt-4 md:mt-0">
-            [CAPABILITIES_MATRIX_V2.0]
+        <div className="font-mono text-black bg-neo-cyan px-2 py-1 border-2 border-black text-sm mt-4 md:mt-0 shadow-neo-sm">
+          [CAPABILITIES_MATRIX_V2.0]
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[minmax(200px,auto)]">
         {data.home.advantages.map((adv, index) => {
           const IconComponent = IconMap[adv.iconKey] || Code;
           return (
-            <RevealOnScroll key={index} delay={index * 100}>
-              <div className="group relative p-5 bg-[#0a0a0a] border border-white/10 hover:border-transparent transition-all duration-300 overflow-hidden flex flex-col clip-corner">
-                {/* Neon Border on Hover */}
-                <div className={`absolute inset-0 border-2 border-transparent ${adv.borderColor} opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-10`}></div>
-                
-                {/* Hover Background Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <RevealOnScroll key={index} delay={index * 50}>
+              <div className={`group relative h-full bg-black border-4 border-white p-6 hover:shadow-neo-purple transition-all duration-300 flex flex-col justify-between ${adv.span}`}>
 
-                <div className="relative z-20 flex-grow">
-                  <div className="flex justify-between items-start mb-4">
-                      <div className={`p-2 bg-white/5 rounded-none group-hover:bg-white/10 transition-colors ${adv.color}`}>
-                          <IconComponent size={24} strokeWidth={1.5} />
-                      </div>
-                      <span className="font-mono text-[10px] text-gray-600 group-hover:text-white/50">0{index + 1}</span>
+                <div className="flex justify-between items-start mb-4">
+                  <div className={`p-3 border-2 border-white bg-black group-hover:bg-white group-hover:text-black transition-colors ${adv.color}`}>
+                    <IconComponent size={32} strokeWidth={2} />
                   </div>
-                  
-                  <h3 className="text-lg font-bold text-white mb-2 font-mono tracking-tight h-[3.5rem] flex items-center">
-                      {adv.title}
-                  </h3>
-                  <p className="text-xs text-gray-400 leading-relaxed mb-4">
-                      {adv.summary}
-                  </p>
-                  
-                  {/* Details List - Restored */}
-                  <ul className="space-y-2 border-t border-white/5 pt-3">
-                      {adv.details.map((detail, dIdx) => (
-                          <li key={dIdx} className="flex items-start text-[10px] text-gray-500 group-hover:text-gray-300 transition-colors">
-                              <span className={`w-1 h-1 mt-1 mr-2 rounded-full flex-shrink-0 ${adv.color.replace('text-', 'bg-')}`}></span>
-                              {detail}
-                          </li>
-                      ))}
-                  </ul>
+                  <span className="font-mono text-xl font-black text-white/20 group-hover:text-white transition-colors">0{index + 1}</span>
                 </div>
 
-                {/* Decorative Elements */}
-                <div className="absolute bottom-2 right-2">
-                  <Crosshair className="w-3 h-3 text-gray-800 group-hover:text-white/20 transition-colors" />
+                <div>
+                  <h3 className="text-2xl font-black text-white mb-2 uppercase leading-none">
+                    {adv.title}
+                  </h3>
+                  <p className="text-sm font-mono text-gray-400 mb-4 border-l-2 border-white pl-3">
+                    {adv.summary}
+                  </p>
                 </div>
+
+                <ul className="space-y-1 border-t-2 border-white pt-3 mt-auto">
+                  {adv.details.map((detail, dIdx) => (
+                    <li key={dIdx} className="flex items-start text-xs font-bold text-white">
+                      <span className="mr-2 text-neo-purple">&gt;</span>
+                      {detail}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </RevealOnScroll>
           )
@@ -642,30 +605,27 @@ const Advantages = () => (
 
 // Compact Card Component
 const ProjectCard = ({ item, index, onClick }) => (
-  <div 
-    className="group relative bg-[#080808] border border-white/10 hover:border-cyan-500/50 p-6 transition-all duration-300 hover:bg-[#0e0e0e] cursor-pointer flex flex-col justify-between min-h-[240px] overflow-hidden clip-corner-lg hover-vibrate"
+  <div
+    className="group relative bg-black border-4 border-white p-6 transition-all duration-300 hover:bg-neo-yellow hover:border-black hover:text-black cursor-pointer flex flex-col justify-between min-h-[280px] shadow-neo hover:shadow-neo-lg hover:-translate-y-2"
     onClick={onClick}
   >
-    {/* Hover Glow */}
-    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-    
     <div className="relative z-10">
       <div className="flex justify-between items-start mb-4">
-         <div className="p-2 bg-white/5 border border-white/5 text-cyan-400 rounded-sm group-hover:scale-110 transition-transform">
-            <Database size={20} />
-         </div>
-         <span className="text-[10px] font-mono text-gray-600 group-hover:text-cyan-400/50">0{index + 1}</span>
+        <div className="p-2 border-2 border-white text-white group-hover:border-black group-hover:text-black transition-colors">
+          <Database size={24} />
+        </div>
+        <span className="text-xs font-mono font-bold text-gray-500 group-hover:text-black">0{index + 1}</span>
       </div>
 
-      <h4 className="text-xl font-black text-white mb-2 uppercase italic leading-none group-hover:text-cyan-400 transition-colors line-clamp-2">
+      <h4 className="text-2xl font-black text-white mb-2 uppercase italic leading-none group-hover:text-black transition-colors line-clamp-2">
         {item.title}
       </h4>
-      <div className="text-[10px] font-mono text-gray-500 mb-4 pb-3 border-b border-white/10 flex justify-between">
-         <span>{item.meta.split('|')[0]}</span>
-         <span className="text-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity">&gt; VIEW DATA</span>
+      <div className="text-xs font-mono text-gray-400 mb-4 pb-3 border-b-2 border-white/20 group-hover:border-black/20 group-hover:text-black/70 flex justify-between">
+        <span>{item.meta.split('|')[0]}</span>
+        <span className="font-bold opacity-0 group-hover:opacity-100 transition-opacity">&gt; VIEW</span>
       </div>
-      
-      <p className="text-xs text-gray-400 leading-relaxed line-clamp-3 mb-4 group-hover:text-gray-300">
+
+      <p className="text-sm text-gray-400 leading-relaxed line-clamp-3 mb-4 group-hover:text-black font-bold">
         {item.description[0]}
       </p>
     </div>
@@ -673,19 +633,11 @@ const ProjectCard = ({ item, index, onClick }) => (
     <div className="relative z-10 mt-auto">
       <div className="flex flex-wrap gap-1.5">
         {item.tags.slice(0, 3).map((tag, tIdx) => (
-            <span key={tIdx} className="text-[9px] font-bold px-1.5 py-0.5 bg-white/5 text-gray-500 border border-white/5 uppercase tracking-wider">
-                {tag}
-            </span>
+          <span key={tIdx} className="text-[10px] font-black px-2 py-1 bg-white text-black border border-black uppercase tracking-wider group-hover:bg-black group-hover:text-white">
+            {tag}
+          </span>
         ))}
-        {item.tags.length > 3 && (
-            <span className="text-[9px] font-bold px-1.5 py-0.5 text-gray-600">+</span>
-        )}
       </div>
-    </div>
-
-    {/* Decorative Corner */}
-    <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1">
-       <Maximize size={14} className="text-cyan-500" />
     </div>
   </div>
 );
@@ -696,56 +648,56 @@ const ProjectModal = ({ project, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
-       {/* Backdrop */}
-       <div className="absolute inset-0 bg-black/90 backdrop-blur-md animate-fade-in" onClick={onClose}></div>
-       
-       {/* Modal Content */}
-       <div className="relative w-full max-w-4xl max-h-[90vh] bg-[#0a0a0a] border border-white/20 shadow-2xl overflow-hidden flex flex-col animate-slide-up clip-corner-xl">
-           {/* Header */}
-           <div className="flex items-center justify-between p-6 border-b border-white/10 bg-[#0e0e0e]">
-               <div>
-                   <h3 className="text-2xl md:text-4xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
-                     {project.title}
-                     <span className="text-xs font-normal not-italic font-mono text-cyan-400 bg-cyan-900/20 px-2 py-1 rounded border border-cyan-500/30">SECURE_FILE</span>
-                   </h3>
-                   <p className="text-xs font-mono text-gray-500 mt-2 uppercase">{project.meta}</p>
-               </div>
-               <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors group">
-                   <X size={24} className="text-gray-400 group-hover:text-white" />
-               </button>
-           </div>
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-neo-cyan/90 backdrop-blur-sm animate-fade-in" onClick={onClose}></div>
 
-           {/* Scrollable Body */}
-           <div className="overflow-y-auto p-6 md:p-10 space-y-8 custom-scrollbar bg-[#0a0a0a]">
-               {/* Tags */}
-               <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag, idx) => (
-                      <span key={idx} className="text-xs font-bold px-3 py-1 bg-cyan-900/10 text-cyan-400 border border-cyan-500/20 uppercase tracking-wider">
-                          {tag}
-                      </span>
-                  ))}
-               </div>
+      {/* Modal Content */}
+      <div className="relative w-full max-w-4xl max-h-[90vh] bg-neo-black border-4 border-black shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] overflow-hidden flex flex-col animate-slide-up">
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b-4 border-black bg-white">
+          <div>
+            <h3 className="text-3xl md:text-5xl font-black text-black uppercase italic tracking-tighter flex items-center gap-3">
+              {project.title}
+              <span className="text-xs font-bold not-italic font-mono text-white bg-black px-2 py-1">SECURE_FILE</span>
+            </h3>
+            <p className="text-sm font-mono text-gray-600 mt-2 uppercase font-bold">{project.meta}</p>
+          </div>
+          <button onClick={onClose} className="p-2 border-2 border-black hover:bg-black hover:text-white transition-colors group">
+            <X size={32} />
+          </button>
+        </div>
 
-               {/* Description */}
-               <div className="space-y-4">
-                   <h4 className="text-sm font-bold text-gray-500 uppercase tracking-widest border-b border-white/5 pb-2">Project Briefing</h4>
-                   <ul className="space-y-4">
-                      {project.description.map((desc, idx) => (
-                          <li key={idx} className="flex items-start text-gray-300 leading-relaxed">
-                              <ArrowUpRight className="w-5 h-5 mr-3 text-cyan-500 flex-shrink-0 mt-1" />
-                              {desc}
-                          </li>
-                      ))}
-                   </ul>
-               </div>
-           </div>
+        {/* Scrollable Body */}
+        <div className="overflow-y-auto p-6 md:p-10 space-y-8 custom-scrollbar bg-neo-white text-black">
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2">
+            {project.tags.map((tag, idx) => (
+              <span key={idx} className="text-xs font-black px-3 py-1 bg-neo-yellow border-2 border-black uppercase tracking-wider shadow-neo-sm">
+                {tag}
+              </span>
+            ))}
+          </div>
 
-           {/* Footer Decoration */}
-           <div className="p-2 bg-black border-t border-white/10 flex justify-between text-[10px] font-mono text-gray-600 uppercase">
-               <span>ID: {Math.random().toString(36).substr(2, 9).toUpperCase()}</span>
-               <span>ENCRYPTED CONNECTION</span>
-           </div>
-       </div>
+          {/* Description */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-black text-black uppercase tracking-widest border-b-4 border-black pb-2 inline-block">Project Briefing</h4>
+            <ul className="space-y-4">
+              {project.description.map((desc, idx) => (
+                <li key={idx} className="flex items-start text-black font-medium leading-relaxed text-lg">
+                  <ArrowUpRight className="w-6 h-6 mr-3 text-neo-purple flex-shrink-0 mt-1" strokeWidth={3} />
+                  {desc}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Footer Decoration */}
+        <div className="p-3 bg-black border-t-4 border-black flex justify-between text-xs font-mono text-neo-green uppercase font-bold">
+          <span>ID: {Math.random().toString(36).substr(2, 9).toUpperCase()}</span>
+          <span>ENCRYPTED CONNECTION</span>
+        </div>
+      </div>
     </div>
   );
 };
@@ -754,32 +706,30 @@ const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
 
   return (
-    <section id="project" className="py-32 relative z-10 overflow-hidden bg-black">
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-cyan-900/5 to-transparent pointer-events-none"></div>
-      
+    <section id="project" className="py-32 relative z-10 overflow-hidden bg-neo-black">
       <div className="container mx-auto px-6">
         <div className="flex items-center mb-20">
-           <Activity className="mr-4 text-cyan-400" />
-           <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
-             Project <span className="text-cyan-500">Deployments</span>
-           </h2>
+          <Activity className="mr-4 text-neo-green" size={40} />
+          <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter">
+            Project <span className="text-neo-green">Deployments</span>
+          </h2>
         </div>
-  
+
         <div className="space-y-20">
           {data.portfolio.map((group, groupIdx) => (
             <div key={groupIdx} className="relative">
-              <h3 className="text-xl font-mono font-bold text-gray-500 mb-8 flex items-center pl-2 border-l-4 border-cyan-500">
+              <h3 className="text-2xl font-mono font-black text-white mb-8 flex items-center pl-4 border-l-8 border-neo-green bg-white/5 py-2">
                 {group.company}
               </h3>
-  
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {group.items.map((item, idx) => (
                   <RevealOnScroll key={idx} delay={idx * 100}>
-                     <ProjectCard 
-                        item={item} 
-                        index={idx} 
-                        onClick={() => setSelectedProject(item)} 
-                      />
+                    <ProjectCard
+                      item={item}
+                      index={idx}
+                      onClick={() => setSelectedProject(item)}
+                    />
                   </RevealOnScroll>
                 ))}
               </div>
@@ -790,9 +740,9 @@ const Projects = () => {
 
       {/* Render Modal */}
       {selectedProject && (
-        <ProjectModal 
-            project={selectedProject} 
-            onClose={() => setSelectedProject(null)} 
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
         />
       )}
     </section>
@@ -800,78 +750,71 @@ const Projects = () => {
 };
 
 const OpenSource = () => (
-  <section id="opensource" className="py-32 relative z-10 bg-gradient-to-b from-[#030305] to-black">
+  <section id="opensource" className="py-32 relative z-10 bg-neo-black text-white">
     <div className="container mx-auto px-6">
-      
+
       {/* Header Section */}
       <div className="text-center max-w-4xl mx-auto mb-20">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full border border-white/10 bg-white/5 mb-6 animate-spin-slow">
-             <Disc className="text-white w-8 h-8" />
+        <div className="inline-flex items-center justify-center w-20 h-20 rounded-none border-4 border-white bg-neo-green mb-6 animate-spin-slow shadow-neo">
+          <Disc className="text-black w-10 h-10" />
         </div>
-        <h2 className="text-5xl md:text-7xl font-black text-white mb-8 uppercase leading-none">
-          Open <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400">Source</span>
+        <h2 className="text-6xl md:text-8xl font-black text-white mb-8 uppercase leading-none">
+          Open <span className="text-transparent text-stroke">Source</span>
         </h2>
-        <p className="text-gray-400 font-mono text-sm md:text-base">{data.opensource.intro.introduction}</p>
+        <p className="text-gray-300 font-mono text-lg font-bold">{data.opensource.intro.introduction}</p>
       </div>
 
       {/* Manifesto Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-24">
-          {/* Principles */}
-          <div className="p-8 bg-[#111] border border-white/10 relative overflow-hidden clip-corner">
-              <div className="absolute top-0 right-0 p-4 opacity-20"><Hash size={100} /></div>
-              <h3 className="text-xl font-bold text-white mb-6 uppercase flex items-center"><Terminal className="mr-2 text-green-400" size={20}/> {data.opensource.intro.principles.title}</h3>
-              <ul className="space-y-4 relative z-10">
-                  {data.opensource.intro.principles.points.map((point, idx) => (
-                      <li key={idx} className="text-sm text-gray-400 leading-relaxed flex">
-                          <span className="text-green-400 mr-2">&gt;</span>
-                          {point}
-                      </li>
-                  ))}
-              </ul>
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+        {/* Principles */}
+        <div className="p-8 bg-black text-white border-4 border-white shadow-neo-purple relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-4 opacity-20"><Hash size={100} /></div>
+          <h3 className="text-3xl font-black text-neo-green mb-6 uppercase flex items-center"><Terminal className="mr-4" size={32} /> {data.opensource.intro.principles.title}</h3>
+          <ul className="space-y-4 relative z-10">
+            {data.opensource.intro.principles.points.map((point, idx) => (
+              <li key={idx} className="text-sm font-mono text-gray-300 leading-relaxed flex">
+                <span className="text-neo-green mr-2">&gt;</span>
+                {point}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-          <div className="space-y-6">
-             {/* Community */}
-             <div className="p-6 bg-[#111] border border-white/10 clip-corner">
-                 <h3 className="text-lg font-bold text-white mb-2 uppercase">{data.opensource.intro.community.title}</h3>
-                 <p className="text-sm text-gray-400 leading-relaxed">{data.opensource.intro.community.content}</p>
-             </div>
-             {/* Growth */}
-             <div className="p-6 bg-[#111] border border-white/10 clip-corner">
-                 <h3 className="text-lg font-bold text-white mb-2 uppercase">{data.opensource.intro.personal_growth.title}</h3>
-                 <p className="text-sm text-gray-400 leading-relaxed">{data.opensource.intro.personal_growth.content}</p>
-             </div>
+        <div className="space-y-8">
+          {/* Community */}
+          <div className="p-8 bg-black border-4 border-white shadow-neo">
+            <h3 className="text-2xl font-black text-white mb-4 uppercase">{data.opensource.intro.community.title}</h3>
+            <p className="text-base font-bold text-gray-300 leading-relaxed">{data.opensource.intro.community.content}</p>
           </div>
-      </div>
-      
-      {/* Conclusion Quote */}
-      <div className="max-w-2xl mx-auto text-center mb-24 relative">
-           <Quote className="absolute top-0 left-0 text-white/10 transform -translate-x-1/2 -translate-y-1/2" size={64} />
-           <p className="text-xl md:text-2xl font-bold text-white relative z-10 italic">"{data.opensource.intro.quote}"</p>
-           <p className="mt-4 text-sm text-gray-500 font-mono">{data.opensource.intro.conclusion}</p>
+          {/* Growth */}
+          <div className="p-8 bg-neo-yellow border-4 border-white shadow-neo">
+            <h3 className="text-2xl font-black text-black mb-4 uppercase">{data.opensource.intro.personal_growth.title}</h3>
+            <p className="text-base font-bold text-black leading-relaxed">{data.opensource.intro.personal_growth.content}</p>
+          </div>
+        </div>
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
         {data.opensource.projects.map((project, idx) => (
           <RevealOnScroll key={idx} delay={idx * 100}>
-            <a 
+            <a
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block p-8 bg-[#0a0a0a] border border-white/10 hover:border-green-400 transition-all duration-300 relative overflow-hidden hover:-translate-y-2 clip-corner"
+              className="group block p-8 bg-black border-4 border-white hover:bg-white hover:text-black transition-all duration-300 relative overflow-hidden hover:-translate-y-2 shadow-neo hover:shadow-neo-green"
             >
-              <div className="absolute top-0 right-0 bg-green-400 text-black text-[10px] font-bold px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  GIT_REPO
+              <div className="absolute top-0 right-0 bg-white text-black text-xs font-bold px-2 py-1 group-hover:bg-neo-green group-hover:text-black transition-colors">
+                GIT_REPO
               </div>
-              <div className="mb-6 text-green-400 group-hover:scale-110 transition-transform origin-left">
-                <Terminal size={32} />
+              <div className="mb-6 text-white group-hover:text-neo-green transition-colors">
+                <Terminal size={40} />
               </div>
-              <h3 className="text-xl font-black text-white mb-3 uppercase">{project.name}</h3>
-              <p className="text-sm text-gray-500 leading-relaxed mb-6 min-h-[60px] group-hover:text-gray-300 transition-colors">
+              <h3 className="text-2xl font-black mb-3 uppercase">{project.name}</h3>
+              <p className="text-sm font-bold text-gray-400 leading-relaxed mb-6 min-h-[60px] group-hover:text-gray-600 transition-colors">
                 {project.description}
               </p>
-              <div className="flex items-center text-xs font-mono text-white/40 group-hover:text-green-400 transition-colors">
+              <div className="flex items-center text-xs font-mono text-white/40 group-hover:text-neo-green transition-colors">
                 <span>&gt; ACCESS_CODE</span>
                 <span className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">_INIT</span>
               </div>
@@ -879,15 +822,14 @@ const OpenSource = () => (
           </RevealOnScroll>
         ))}
       </div>
-      
+
       <div className="flex justify-center">
-         <a href={data.opensource.moreProjects.url} target="_blank" className="group relative inline-flex items-center px-10 py-4 bg-white text-black font-black uppercase tracking-widest hover:bg-cyan-400 transition-colors overflow-hidden clip-corner">
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-            <span className="relative z-10 flex items-center">
-                <Github className="mr-3" size={20} />
-                {data.opensource.moreProjects.buttonText}
-            </span>
-         </a>
+        <a href={data.opensource.moreProjects.url} target="_blank" className="group relative inline-flex items-center px-12 py-5 bg-black text-white font-black uppercase tracking-widest border-4 border-white hover:bg-white hover:text-black hover:border-black hover:shadow-neo transition-all">
+          <span className="relative z-10 flex items-center text-xl">
+            <Github className="mr-3" size={24} />
+            {data.opensource.moreProjects.buttonText}
+          </span>
+        </a>
       </div>
     </div>
   </section>
@@ -901,103 +843,98 @@ const Contact = () => {
     const body = `NAME: ${formData.name}\n\nCONTENT:\n${formData.message}`;
     const mailtoUrl = `mailto:1547654938@qq.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     try {
-        const link = document.createElement('a');
-        link.href = mailtoUrl;
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+      const link = document.createElement('a');
+      link.href = mailtoUrl;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (e) { window.location.href = mailtoUrl; }
   };
 
   return (
-    <section id="contact" className="py-32 relative z-10 overflow-hidden bg-black">
-       {/* Footer Marquee */}
-       <div className="absolute top-0 w-full">
-         <Marquee text="LET'S CONNECT • START A PROJECT • HIRE ME •" reverse={true} />
-       </div>
+    <section id="contact" className="py-32 relative z-10 overflow-hidden bg-neo-black">
+      {/* Footer Marquee */}
+      <div className="absolute top-0 w-full border-b-4 border-white bg-neo-pink text-black">
+        <Marquee text="LET'S CONNECT • START A PROJECT • HIRE ME •" reverse={true} />
+      </div>
 
       <div className="container mx-auto px-6 pt-20 relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-7xl md:text-9xl font-black text-white mb-8 tracking-tighter leading-[0.8]">
-              GET<br/><span className="text-stroke-thin text-transparent stroke-white hover:text-white transition-colors duration-500">IN TOUCH</span>
+              GET<br /><span className="text-transparent text-stroke hover:text-white transition-colors duration-500">IN TOUCH</span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-md mb-12 font-mono border-l-4 border-cyan-500 pl-6">
+            <p className="text-xl text-gray-400 max-w-md mb-12 font-mono border-l-8 border-neo-cyan pl-6 bg-white/5 py-4">
               Available for freelance opportunities and full-time roles.
             </p>
-            
+
             <div className="space-y-8 font-mono text-sm">
-               <div className="group flex items-center space-x-6 cursor-pointer hover:text-cyan-400 transition-colors text-white">
-                 <div className="w-12 h-12 border border-white/20 flex items-center justify-center group-hover:bg-white/10 group-hover:border-cyan-400">
-                   <Mail size={20} />
-                 </div>
-                 <div>
-                   <p className="text-xs text-gray-500 mb-1">MAIL_TO</p>
-                   <p className="text-lg">1547654938@qq.com</p>
-                 </div>
-               </div>
-               
-               <div className="group flex items-center space-x-6 text-white">
-                 <div className="w-12 h-12 border border-white/20 flex items-center justify-center group-hover:bg-white/10 group-hover:border-purple-400 transition-colors">
-                   <MessageCircle size={20} />
-                 </div>
-                 <div>
-                   <p className="text-xs text-gray-500 mb-1">WECHAT_ID</p>
-                   <p className="text-lg">o1547654938</p>
-                 </div>
-               </div>
+              <div className="group flex items-center space-x-6 cursor-pointer hover:text-neo-cyan transition-colors text-white">
+                <div className="w-16 h-16 border-4 border-white flex items-center justify-center group-hover:bg-neo-cyan group-hover:text-black group-hover:border-neo-cyan shadow-neo">
+                  <Mail size={32} />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 mb-1 font-bold">MAIL_TO</p>
+                  <p className="text-2xl font-bold">1547654938@qq.com</p>
+                </div>
+              </div>
+
+              <div className="group flex items-center space-x-6 text-white">
+                <div className="w-16 h-16 border-4 border-white flex items-center justify-center group-hover:bg-neo-purple group-hover:text-black group-hover:border-neo-purple shadow-neo transition-colors">
+                  <MessageCircle size={32} />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 mb-1 font-bold">WECHAT_ID</p>
+                  <p className="text-2xl font-bold">o1547654938</p>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div className="bg-[#111] border border-white/10 p-8 md:p-12 relative clip-corner-lg">
-              {/* Decorative Corners */}
-              <div className="absolute top-0 left-0 w-4 h-4 bg-white"></div>
-              <div className="absolute bottom-0 right-0 w-4 h-4 bg-white"></div>
 
-              <h3 className="text-2xl font-black text-white mb-8 uppercase flex items-center">
-                  <span className="w-2 h-2 bg-green-500 rounded-full mr-3 animate-pulse"></span>
-                  Transmission
-              </h3>
-              <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); handleSend(); }}>
-                 <div className="group">
-                   <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-widest group-focus-within:text-cyan-400">Identity</label>
-                   <input 
-                     type="text" 
-                     value={formData.name}
-                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                     className="w-full bg-black border-b border-white/20 py-3 text-white focus:border-cyan-400 focus:outline-none transition-colors font-mono" 
-                     placeholder="YOUR NAME" 
-                   />
-                 </div>
-                 {/* Email input removed */}
-                 <div className="group">
-                   <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-widest group-focus-within:text-cyan-400">Data Packet</label>
-                   <textarea 
-                     rows="4" 
-                     value={formData.message}
-                     onChange={(e) => setFormData({...formData, message: e.target.value})}
-                     className="w-full bg-black border-b border-white/20 py-3 text-white focus:border-cyan-400 focus:outline-none transition-colors font-mono resize-none" 
-                     placeholder="ENTER MESSAGE..."
-                   ></textarea>
-                 </div>
-                 <button 
-                   type="submit"
-                   className="w-full py-5 bg-white text-black font-black uppercase tracking-[0.2em] hover:bg-cyan-400 hover:text-black transition-all flex items-center justify-center group mt-4"
-                 >
-                   Execute Send
-                   <ArrowUpRight className="ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" size={18} />
-                 </button>
-              </form>
+          <div className="bg-white border-4 border-black p-8 md:p-12 relative shadow-neo-lg transform rotate-1 hover:rotate-0 transition-transform">
+            <h3 className="text-4xl font-black text-black mb-8 uppercase flex items-center">
+              <span className="w-4 h-4 bg-neo-green border-2 border-black rounded-full mr-4 animate-pulse"></span>
+              Transmission
+            </h3>
+            <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); handleSend(); }}>
+              <div className="group">
+                <label className="block text-xs font-black text-black mb-2 uppercase tracking-widest">Identity</label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full bg-neo-white border-4 border-black py-4 px-4 text-black focus:bg-neo-yellow focus:outline-none transition-colors font-mono font-bold"
+                  placeholder="YOUR NAME"
+                />
+              </div>
+              <div className="group">
+                <label className="block text-xs font-black text-black mb-2 uppercase tracking-widest">Data Packet</label>
+                <textarea
+                  rows="4"
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full bg-neo-white border-4 border-black py-4 px-4 text-black focus:bg-neo-yellow focus:outline-none transition-colors font-mono font-bold resize-none"
+                  placeholder="ENTER MESSAGE..."
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="w-full py-5 bg-black text-white font-black uppercase tracking-[0.2em] hover:bg-neo-cyan hover:text-black hover:shadow-neo transition-all flex items-center justify-center group mt-4 border-4 border-transparent hover:border-black"
+              >
+                Execute Send
+                <ArrowUpRight className="ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" size={24} strokeWidth={3} />
+              </button>
+            </form>
           </div>
         </div>
-        
-        <div className="mt-32 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-[10px] font-mono text-gray-600 uppercase tracking-widest">
+
+        <div className="mt-32 pt-8 border-t-4 border-white flex flex-col md:flex-row justify-between items-center text-xs font-mono text-gray-500 uppercase tracking-widest font-bold">
           <p>COPYRIGHT © 2024 CHRIS YANG. SYSTEM SECURE.</p>
           <div className="flex space-x-8 mt-4 md:mt-0">
-             <span className="hover:text-white cursor-pointer">Github</span>
-             <span className="hover:text-white cursor-pointer">LinkedIn</span>
-             <span className="hover:text-white cursor-pointer">Juejin</span>
+            <span className="hover:text-white cursor-pointer hover:underline decoration-2 underline-offset-4">Github</span>
+            <span className="hover:text-white cursor-pointer hover:underline decoration-2 underline-offset-4">LinkedIn</span>
+            <span className="hover:text-white cursor-pointer hover:underline decoration-2 underline-offset-4">Juejin</span>
           </div>
         </div>
       </div>
@@ -1036,122 +973,12 @@ export default function App() {
 
   return (
     <div className="font-sans antialiased text-gray-200 selection:bg-cyan-400 selection:text-black bg-[#030305] cursor-none">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
-        
-        body { font-family: 'Inter', sans-serif; cursor: none; }
-        a, button, input, textarea { cursor: none; }
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
-        
-        /* Custom Animations */
-        @keyframes blob {
-          0% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-          100% { transform: translate(0px, 0px) scale(1); }
-        }
-        .animate-blob { animation: blob 10s infinite; }
-        .animation-delay-2000 { animation-delay: 2s; }
-        .animation-delay-4000 { animation-delay: 4s; }
-        
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-100%); }
-        }
-        .animate-marquee { animation: marquee 30s linear infinite; }
-        .animate-marquee2 { animation: marquee 30s linear infinite; animation-delay: -15s; }
 
-        @keyframes scan {
-            0% { top: 0%; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
-        .animate-scan { animation: scan 3s linear infinite; }
 
-        @keyframes gradient-x {
-            0% { background-position: 0% 50% }
-            50% { background-position: 100% 50% }
-            100% { background-position: 0% 50% }
-        }
-        .animate-gradient-x { background-size: 200% 200%; animation: gradient-x 5s ease infinite; }
-
-        @keyframes fade-in {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .animate-fade-in { animation: fade-in 0.2s ease-out forwards; }
-
-        @keyframes slide-up {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-slide-up { animation: slide-up 0.3s ease-out forwards; }
-
-        @keyframes glitch {
-            0% { transform: translate(0) }
-            20% { transform: translate(-2px, 2px) }
-            40% { transform: translate(-2px, -2px) }
-            60% { transform: translate(2px, 2px) }
-            80% { transform: translate(2px, -2px) }
-            100% { transform: translate(0) }
-        }
-        .animate-glitch:hover {
-            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
-            color: #06b6d4;
-        }
-        .hover-vibrate:hover {
-            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
-        }
-
-        /* Utilities */
-        .text-stroke { -webkit-text-stroke: 1px white; }
-        .text-stroke-thin { -webkit-text-stroke: 1px rgba(255,255,255,0.3); }
-        
-        .clip-corner {
-            clip-path: polygon(
-                0 0, 
-                100% 0, 
-                100% calc(100% - 20px), 
-                calc(100% - 20px) 100%, 
-                0 100%
-            );
-        }
-        .clip-corner-lg {
-             clip-path: polygon(
-                0 0, 
-                100% 0, 
-                100% calc(100% - 30px), 
-                calc(100% - 30px) 100%, 
-                0 100%
-            );
-        }
-        .clip-corner-xl {
-             clip-path: polygon(
-                0 0, 
-                100% 0, 
-                100% calc(100% - 40px), 
-                calc(100% - 40px) 100%, 
-                0 100%
-            );
-        }
-
-        /* Custom Scrollbar for Modal */
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #0a0a0a; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
-        
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #333; }
-        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
-      `}</style>
-      
       <CustomCursor />
       <Background />
       <Navbar activeSection={activeSection} scrollToSection={scrollToSection} />
-      
+
       <main>
         <Hero />
         <Advantages />
