@@ -426,13 +426,6 @@ const Marquee = ({ text, reverse = false }) => (
         </span>
       ))}
     </div>
-    <div className={`absolute top-0 py-4 animate-marquee2 whitespace-nowrap flex ${reverse ? 'flex-row-reverse' : ''}`}>
-      {[...Array(10)].map((_, i) => (
-        <span key={i} className="mx-8 flex items-center">
-          <Zap size={12} className="mr-2 fill-black" /> {text}
-        </span>
-      ))}
-    </div>
   </div>
 );
 
@@ -477,7 +470,7 @@ const Navbar = ({ activeSection, scrollToSection }) => {
 };
 
 const Hero = () => (
-  <section id="home" className="min-h-screen flex flex-col justify-center pt-32 relative overflow-hidden bg-neo-black">
+  <section id="home" className="min-h-screen flex flex-col justify-center pt-32 pb-28 md:pb-32 relative overflow-hidden bg-neo-black">
     {/* Big Background Text */}
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full select-none pointer-events-none overflow-hidden flex flex-col items-center justify-center opacity-10">
       <h1 className="text-[15vw] font-black leading-none text-transparent text-stroke">ENGINEER</h1>
@@ -486,7 +479,7 @@ const Hero = () => (
 
     <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
       {/* Left Content */}
-      <div className="lg:col-span-7 space-y-8">
+      <div className="lg:col-span-7 space-y-8 order-2 lg:order-1">
         {/* Status Bar */}
         <div className="inline-flex items-center space-x-4 font-mono text-xs text-black bg-neo-cyan px-4 py-2 border-2 border-white shadow-neo transform -rotate-1">
           <span className="w-3 h-3 bg-black rounded-full animate-ping"></span>
@@ -503,6 +496,30 @@ const Hero = () => (
           <div className="absolute -top-6 -left-6 w-16 h-16 border-t-4 border-l-4 border-neo-green"></div>
         </div>
 
+        {/* Mobile Profile Card: shown under CHRIS YANG on small screens */}
+        <div className="block lg:hidden mt-8 max-w-md mx-auto">
+          <div className="border-4 border-white bg-black p-2 shadow-neo-lg transform rotate-3">
+            <div className="border-2 border-white p-6 bg-neo-black relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-neo-pink text-black font-bold px-2 py-1 text-xs">V2.0</div>
+              <div className="w-full aspect-square bg-[#111] border-2 border-white mb-4 flex items-center justify-center overflow-hidden relative">
+                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${profileImg})` }}></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+              </div>
+              <div className="font-mono text-neo-green text-sm space-y-2">
+                <div className="flex justify-between border-b border-white/20 pb-1">
+                  <span>ROLE:</span><span>FULLSTACK_DEV</span>
+                </div>
+                <div className="flex justify-between border-b border-white/20 pb-1">
+                  <span>EXP:</span><span>SENIOR_LEVEL</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>STATUS:</span><span className="animate-pulse">AVAILABLE</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="bg-white border-2 border-black p-6 shadow-neo transform rotate-1 max-w-2xl">
           <p className="font-bold text-black text-xl mb-2 uppercase">{data.home.hero.subtitle}</p>
           <p className="text-sm md:text-base text-black font-mono leading-relaxed">{data.home.hero.description}</p>
@@ -517,8 +534,8 @@ const Hero = () => (
         </div>
       </div>
 
-      {/* Right Visual (Profile Card) */}
-      <div className="lg:col-span-5 relative hidden lg:block">
+      {/* Right Visual (Profile Card) – desktop only */}
+      <div className="lg:col-span-5 relative mt-10 lg:mt-0 max-w-md mx-auto lg:max-w-none order-1 lg:order-2 hidden lg:block">
         <div className="border-4 border-white bg-black p-2 shadow-neo-lg transform rotate-3 hover:rotate-0 transition-transform duration-500">
           <div className="border-2 border-white p-6 bg-neo-black relative overflow-hidden">
             <div className="absolute top-0 right-0 bg-neo-pink text-black font-bold px-2 py-1 text-xs">V2.0</div>
@@ -647,12 +664,12 @@ const ProjectModal = ({ project, onClose }) => {
   if (!project) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-8">
       {/* Backdrop */}
       <div className="absolute inset-0 bg-neo-cyan/90 backdrop-blur-sm animate-fade-in" onClick={onClose}></div>
 
       {/* Modal Content */}
-      <div className="relative w-full max-w-4xl max-h-[90vh] bg-neo-black border-4 border-black shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] overflow-hidden flex flex-col animate-slide-up">
+      <div className="relative w-full max-w-4xl max-h-[80vh] md:max-h-[90vh] bg-neo-black border-4 border-black shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] overflow-hidden flex flex-col animate-slide-up">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b-4 border-black bg-white">
           <div>
@@ -668,7 +685,7 @@ const ProjectModal = ({ project, onClose }) => {
         </div>
 
         {/* Scrollable Body */}
-        <div className="overflow-y-auto p-6 md:p-10 space-y-8 custom-scrollbar bg-neo-white text-black">
+        <div className="flex-1 overflow-y-auto p-6 md:p-10 space-y-8 custom-scrollbar bg-neo-white text-black">
           {/* Tags */}
           <div className="flex flex-wrap gap-2">
             {project.tags.map((tag, idx) => (
